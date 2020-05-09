@@ -1,0 +1,477 @@
+<?php
+// (Model)
+$pdo = new PDO(
+  "mysql:host=localhost;dbname=jinja_alis; charset=utf8",
+  "root", "68965", [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false,
+  ]
+);
+
+//(Controller)
+$malPositive =$pdo->query('select count(result)from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 34 && unhls_test_results.result="positive"&& time_entered like "2019-10-%"');
+
+$malNegative =$pdo->query('select count(result)from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 34 && unhls_test_results.result="negative" && time_entered like "2019-10-%"');
+
+$malTotal =$pdo->query('select count(result)from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 34 && unhls_test_results.result != "0" && time_entered like "2019-10-%"');
+
+$malaPositive =$pdo->query('select count(result)from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 34 && unhls_test_results.result="positive"&& time_entered between "2019-01-01" AND "2019-12-31"');
+
+$malaNegative =$pdo->query('select count(result)from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 34 && unhls_test_results.result="negative" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$malaTotal =$pdo->query('select count(result)from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 34 && unhls_test_results.result != "0" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$mal1 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "34" && unhls_test_results.result = "negative" && unhls_test_results.time_entered like "2019-10-%"');
+
+$mal2 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "34" && unhls_test_results.result = "negative" && unhls_test_results.time_entered like "2019-10-%" ');
+
+$mal3 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "34" && unhls_test_results.result = "positive" && unhls_test_results.time_entered like "2019-10-%" ');
+
+$mal4 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "34" && unhls_test_results.result = "positive" && unhls_test_results.time_entered like "2019-10-%" ');
+
+$typhPositive = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 70 && unhls_test_results.result = "Reactive" && time_entered like "2019-10-%"');
+
+$typhNegative = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 70 && unhls_test_results.result = "Non-Reactive" && time_entered like "2019-10-%"');
+
+$typhTotal = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 70 && time_entered like "2019-10-%"');
+
+$typhaPositive = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 70 && unhls_test_results.result = "Reactive" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$typhaNegative = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 70 && unhls_test_results.result = "Non-Reactive" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$typhaTotal = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 70 && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$ty1 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "70" && unhls_test_results.result = "Non-Reactive" && unhls_test_results.time_entered like "2019-10-%"');
+
+$ty2 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "70" && unhls_test_results.result = "Non-Reactive" && unhls_test_results.time_entered like "2019-10-%" ');
+
+
+$ty3 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "70" && unhls_test_results.result = "Reactive" && unhls_test_results.time_entered like "2019-10-%" ');
+
+
+$ty4 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "70" && unhls_test_results.result = "Reactive" && unhls_test_results.time_entered like "2019-10-%" ');
+
+$hivPositive = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 29 && unhls_test_results.result = "REACTIVE" && time_entered like "2019-10-%"');
+
+$hivNegative = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 29 && unhls_test_results.result = "NON REACTIVE" && time_entered like "2019-10-%"');
+
+$hivTotal = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 29 && time_entered like "2019-10-%"');
+
+$hivaPositive = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 29 && unhls_test_results.result = "REACTIVE" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$hivaNegative = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 29 && unhls_test_results.result = "NON REACTIVE" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$hivaTotal = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 29 && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$hv1 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "29" && unhls_test_results.result = "Non Reactive" && unhls_test_results.time_entered like "2019-10-%"');
+
+$hv2 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "29" && unhls_test_results.result = "Non Reactive" && unhls_test_results.time_entered like "2019-10-%" ');
+
+
+$hv3 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "29" && unhls_test_results.result = "REACTIVE" && unhls_test_results.time_entered like "2019-10-%" ');
+
+
+$hv4 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "29" && unhls_test_results.result = "REACTIVE" && unhls_test_results.time_entered like "2019-10-%" ');
+
+$hepPositive = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 30 && unhls_test_results.result = "POSITIVE" && time_entered like "2019-10-%"');
+
+$hepNegative = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 30 && unhls_test_results.result = "NEGATIVE" && time_entered like "2019-10-%"');
+
+$hepTotal = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 30 && time_entered like "2019-10-%"');
+
+$hepaPositive = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 30 && unhls_test_results.result = "POSITIVE" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$hepaNegative = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 30 && unhls_test_results.result = "NEGATIVE" && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$hepaTotal = $pdo->query('select count(result) from unhls_test_results left join unhls_tests on unhls_test_results.test_id = unhls_tests.id where unhls_tests.test_type_id = 30 && time_entered between "2019-01-01" AND "2019-12-31"');
+
+$hp1 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "30" && unhls_test_results.result = "NEGATIVE" && unhls_test_results.time_entered like "2019-10-%"');
+
+$hp2 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "30" && unhls_test_results.result = "NEGATIVE" && unhls_test_results.time_entered like "2019-10-%" ');
+
+
+$hp3 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "2002-01-01" AND "2020-12-31" && unhls_tests.test_type_id = "30" && unhls_test_results.result = "POSITIVE" && unhls_test_results.time_entered like "2019-10-%" ');
+
+
+$hp4 = $pdo->query('select count(result) from unhls_test_results inner join unhls_tests on unhls_test_results.test_id = unhls_tests.id inner join unhls_visits on unhls_tests.visit_id = unhls_visits.id inner join unhls_patients on unhls_visits.patient_id = unhls_patients.id inner join test_types on unhls_tests.test_type_id = test_types.id  where unhls_patients.dob between "1900-01-01" AND "2001-12-31" && unhls_tests.test_type_id = "30" && unhls_test_results.result = "POSITIVE" && unhls_test_results.time_entered like "2019-10-%" ');
+
+//(View)
+?>
+<!DOCTYPE htm>
+<html>
+<body>
+
+    <div class="panel panel-primary" style="border: 2px solid green;">
+<ul>
+      <li><a href="index.php">Home</a></li>
+      <li><a href="jan.phtml">January 2019 Aggregated Report</a></li>
+  		<li><a href="feb.phtml">February 2019 Aggregated Report</a></li>
+  		<li><a href="mar.phtml">March 2019 Aggregated Report</a></li>
+  		<li><a href="apr.phtml">April 2019 Aggregated Report</a></li>
+  		<li><a href="may.phtml">May 2019 Aggregated Report</a></li>
+  		<li><a href="june.phtml">June 2019 Aggregated Report</a></li>
+  		<li><a href="july.phtml">July 2019 Aggregated Report</a></li>
+  		<li><a href="aug.phtml">August 2019 Aggregated Report</a></li>
+  		<li><a href="sep.phtml">September 2019 Aggregated Report</a></li>
+  		<li><a href="nov.phtml">November 2019 Aggregated Report</a></li>
+  		<li><a href="dec.phtml">December 2019 Aggregated Report</a></li>
+  	</ul>
+  </div>
+
+<ul><?php
+echo "Monthly Aggregated Laboratory Report (For month of October-2019)";
+echo "<br>";echo "<br>";
+echo "<table border='1'>
+<th>MALARIA (Rapid Diagnosis) </th>
+<tr>
+<th>Positives</th>
+<th>Negatives</th>
+<th>Total Number of Tests</th>
+<th> Negative Malaria tests Aggregated into Age groups</th>
+<th> Positive Malaria tests Aggregated into Age groups</th>
+</tr>";
+
+
+
+while ($row = $malPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $malNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $malTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+
+while ($row1 = $mal1->fetch())
+{
+
+
+while ($row2 = $mal2->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Negatives | " . "18 - 100 years::" . $row2['count(result)'] . " Negatives | " . "</td>";
+}
+}
+
+
+while ($row1 = $mal3->fetch())
+{
+
+
+while ($row2 = $mal4->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Positives | " . "18 - 100 years::" . $row2['count(result)'] . " Positives | " . "</td>";
+}
+}
+
+echo "</table>";
+
+echo "<table border='1'>
+<th>TYPHOID(Salmonella Typhi)</th>
+<tr>
+<th>Positives</th>
+<th>Negatives</th>
+<th>Total Number of Tests</th>
+<th> Negative Typhoid-st tests Aggregated into Age groups</th>
+<th> Positive Typhoid-st tests Aggregated into Age groups</th>
+</tr>";
+
+
+
+while ($row = $typhPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $typhNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $typhTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row1 = $ty1->fetch())
+{
+
+
+while ($row2 = $ty2->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Negatives | " . "18 - 100 years::" . $row2['count(result)'] . " Negatives | " . "</td>";
+}
+}
+
+
+while ($row1 = $ty3->fetch())
+{
+
+
+while ($row2 = $ty4->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Positives | " . "18 - 100 years::" . $row2['count(result)'] . " Positives | " . "</td>";
+}
+}
+
+echo "</table>";
+
+
+echo "<table border='1'>
+<th>HIV / AIDs ( Serology - Test)</th>
+<tr>
+<th>Positives</th>
+<th>Negatives</th>
+<th>Total Number of Tests</th>
+<th> Negative HIV / AIDs tests Aggregated into Age groups</th>
+<th> Positive HIV / AIDs tests Aggregated into Age groups</th>
+</tr>";
+
+
+
+while ($row = $hivPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $hivNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $hivTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row1 = $hv1->fetch())
+{
+
+
+while ($row2 = $hv2->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Negatives | " . "18 - 100 years::" . $row2['count(result)'] . " Negatives | " . "</td>";
+}
+}
+
+
+while ($row1 = $hv3->fetch())
+{
+
+
+while ($row2 = $hv4->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Positives | " . "18 - 100 years::" . $row2['count(result)'] . " Positives | " . "</td>";
+}
+}
+
+echo "</table>";
+
+echo "<table border='1'>
+<th>HepB surface Antigen TEST</th>
+<tr>
+<th>Positives</th>
+<th>Negatives</th>
+<th>Total Number of Tests</th>
+<th> Negative HepatitisB tests Aggregated into Age groups</th>
+<th> Positive HepatitisB tests Aggregated into Age groups</th>
+</tr>";
+
+
+
+while ($row = $hepPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $hepNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $hepTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+
+while ($row1 = $hp1->fetch())
+{
+
+
+while ($row2 = $hp2->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Negatives | " . "18 - 100 years::" . $row2['count(result)'] . " Negatives | " . "</td>";
+}
+}
+
+
+while ($row1 = $hp3->fetch())
+{
+
+
+while ($row2 = $hp4->fetch())
+{
+echo "<td>". "| 0 - 17 years::" . $row1['count(result)'] . " Positives | " . "18 - 100 years::" . $row2['count(result)'] . " Positives | " . "</td>";
+}
+}
+
+
+echo "</table>";
+
+mysqli_close($con);
+?>
+
+</ul>
+</body>
+</html>
+<html>
+
+<body>
+<ul><?php
+echo "Annual Aggregated Laboratory Report (For the year 2019)";
+echo "<br>";echo "<br>";
+echo "<table border='1'>
+<th>MALARIA (Rapid Diagnosis) </th>
+<tr>
+<th>Positives (Annual)</th>
+<th>Negatives (Annual)</th>
+<th>Total Number of Tests (Annual)</th>
+</tr>";
+
+
+
+while ($row = $malaPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $malaNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $malaTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+echo "</table>";
+
+echo "<table border='1'>
+<th>TYPHOID(Salmonella Typhi)</th>
+<tr>
+<th>Positives (Annual)</th>
+<th>Negatives (Annual)</th>
+<th>Total Number of Tests (Annual)</th>
+</tr>";
+
+
+
+while ($row = $typhaPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $typhaNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $typhaTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+echo "</table>";
+
+
+echo "<table border='1'>
+<th>HIV / AIDs ( Serology - Test)</th>
+<tr>
+<th>Positives (Annual)</th>
+<th>Negatives (Annual)</th>
+<th>Total Number of Tests (Annual)</th>
+</tr>";
+
+
+
+while ($row = $hivaPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $hivaNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $hivaTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+echo "</table>";
+
+
+echo "<table border='1'>
+<th>HepB surface Antigen TEST</th>
+<tr>
+<th>Positives (Annual)</th>
+<th>Negatives (Annual)</th>
+<th>Total Number of Tests (Annual)</th>
+</tr>";
+
+
+
+while ($row = $hepaPositive->fetch())
+{
+
+echo "<td>" . $row['count(result)'] . "</td>";
+
+}
+
+while ($row = $hepaNegative->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+while ($row = $hepaTotal->fetch())
+{
+echo "<td>" . $row['count(result)'] . "</td>";
+}
+
+echo "</table>";
+
+mysqli_close($con);
+?>
+
+</ul>
+</body>
+</html>
+<?php
+// COLOSE CONNECTION
+$stmt = null;
+$pdo = null;
+?>
